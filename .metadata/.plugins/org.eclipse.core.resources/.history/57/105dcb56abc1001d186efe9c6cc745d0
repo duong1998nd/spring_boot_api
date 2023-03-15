@@ -1,0 +1,29 @@
+package com.locShop.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Service;
+
+import com.locShop.model.ProductEntity;
+import com.locShop.repository.ProductRepository;
+
+@Service
+public class ProductService{
+	
+	@Autowired
+	ProductRepository productRepository;
+
+	@Override
+	public ProductEntity save(ProductEntity entity) {
+		ProductEntity pro = productRepository.save(entity);
+		return pro!=null?entity:null;
+	}
+
+	public ProductEntity findById(Long id) {
+		return productRepository.findById(id);
+	}
+	
+	
+}

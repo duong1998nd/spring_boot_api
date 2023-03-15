@@ -1,0 +1,5 @@
+package com.locShop.service;
+
+public class ProductService {
+
+}

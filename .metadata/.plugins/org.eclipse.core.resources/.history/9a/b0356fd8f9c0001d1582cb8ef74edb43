@@ -1,0 +1,39 @@
+package com.locShop.controller;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.locShop.model.CategoryEntity;
+import com.locShop.model.ProductEntity;
+import com.locShop.service.CategoryService;
+import com.locShop.service.ProductService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("api/product")
+public class ProductController {
+	
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private CategoryService categoryService;
+	
+	@PostMapping(value = "/add")
+	public String insertProduct(@Valid @RequestBody ProductEntity pro) {
+
+		if(productService.save(pro)!=null) {
+			return "thêm mới thành công";
+			
+		}else {
+			return "thêm mới thất bại";
+		}
+	}
+}

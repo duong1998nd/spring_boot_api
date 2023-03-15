@@ -1,0 +1,165 @@
+package com.locShop.model;
+
+import java.util.Date;
+
+import org.hibernate.annotations.ColumnDefault;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "products")
+public class ProductEntity {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(nullable = false, unique = true)
+	private String name;
+	
+	@Column(name = "image")
+	private String image;
+	
+	private float price;
+	
+	@ColumnDefault("0")
+	private float sale_price;
+	
+	private String author;
+	
+	@Column(columnDefinition = "TEXT")
+	private String desciption;
+	
+	@ManyToOne()
+	@JoinColumn(name = "category_id",referencedColumnName = "id")
+	private CategoryEntity category_id;
+	
+	@Column(name = "created_at")
+	private Date created_at;
+
+	@Column(name = "updated_at")
+	private Date updated_at;
+
+	@Column(name = "delete_at")
+	private Date delete_at;
+	
+//	public ProductEntity() {
+//		// TODO Auto-generated constructor stub
+//	}
+//	
+//	 
+//	public ProductEntity(Long id, String name, String image, float price, float sale_price, String author,
+//			String desciption, CategoryEntity category_id, Date created_at, Date updated_at, Date delete_at) {
+//		this.id = id;
+//		this.name = name;
+//		this.image = image;
+//		this.price = price;
+//		this.sale_price = sale_price;
+//		this.author = author;
+//		this.desciption = desciption;
+//		this.category_id = category_id;
+//		this.created_at = created_at;
+//		this.updated_at = updated_at;
+//		this.delete_at = delete_at;
+//	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public Date getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
+	}
+
+	public Date getUpdated_at() {
+		return updated_at;
+	}
+
+	public void setUpdated_at(Date updated_at) {
+		this.updated_at = updated_at;
+	}
+
+	public Date getDelete_at() {
+		return delete_at;
+	}
+
+	public void setDelete_at(Date delete_at) {
+		this.delete_at = delete_at;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public float getSale_price() {
+		return sale_price;
+	}
+
+	public void setSale_price(float sale_price) {
+		this.sale_price = sale_price;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getDesciption() {
+		return desciption;
+	}
+
+	public void setDesciption(String desciption) {
+		this.desciption = desciption;
+	}
+
+	public CategoryEntity getCategory_id() {
+		return category_id;
+	}
+
+	public void setCategory_id(CategoryEntity category_id) {
+		this.category_id = category_id;
+	}
+
+
+	
+	
+}

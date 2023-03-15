@@ -1,0 +1,91 @@
+package com.locShop.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Service;
+
+import com.locShop.model.ProductEntity;
+import com.locShop.repository.ProductRepository;
+
+@Service
+public class ProductService implements CrudRepository<ProductEntity, Long>{
+	
+	@Autowired
+	ProductRepository productRepository;
+
+	@Override
+	public <S extends ProductEntity> S save(S entity) {
+		productRepository.insertProduct(entity.getName(), entity.getPrice(), entity.getSale_price(), entity.getDesciption(), entity.getAuthor(), entity.getCategory().getId());
+		return entity;
+	}
+
+	@Override
+	public <S extends ProductEntity> Iterable<S> saveAll(Iterable<S> entities) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ProductEntity> findById(Long id) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
+
+	@Override
+	public boolean existsById(Long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Iterable<ProductEntity> findAll() {
+		return productRepository.findAll();
+	}
+
+	@Override
+	public Iterable<ProductEntity> findAllById(Iterable<Long> ids) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long count() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(ProductEntity entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteAllById(Iterable<? extends Long> ids) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteAll(Iterable<? extends ProductEntity> entities) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
+}

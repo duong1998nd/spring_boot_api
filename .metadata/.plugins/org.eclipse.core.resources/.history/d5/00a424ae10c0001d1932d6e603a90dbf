@@ -1,0 +1,38 @@
+package com.locShop.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.locShop.dto.AuthenticationRequest;
+import com.locShop.securityConfig.JwtUtils;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
+public class AuthenticationController {
+	
+	private final UserDetailsService userDetailsService = null;
+	private final JwtUtils jwtUtils = new JwtUtils();
+
+	private final AuthenticationManager authenticationManager = null;
+	
+	public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest req){
+		authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword())
+		);
+		final UserDetails user = userDetailsService.loadUserByUsername(req.getUsername());
+		if(user != null) {
+			return ResponseEntity.ok(jwtUtils.generateToken(user));
+		}
+		return ResponseEntity.status(400).body("some error has occurred");
+	}
+	
+}

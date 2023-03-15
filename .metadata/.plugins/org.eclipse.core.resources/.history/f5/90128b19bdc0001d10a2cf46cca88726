@@ -1,0 +1,12 @@
+package com.locShop.repository;
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.locShop.model.ProductEntity;
+
+public interface ProductRepository extends CrudRepository<ProductEntity, Long>{
+	
+	public List<ProductEntity> findAll();
+}

@@ -1,0 +1,31 @@
+package com.locShop.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+import com.locShop.model.CategoryEntity;
+import com.locShop.model.ProductEntity;
+
+import jakarta.transaction.Transactional;
+
+public interface ProductRepository extends JpaRepository<ProductEntity, Long>{
+	
+
+	@Query("SELECT p FROM ProductEntity p WHERE id=:id")
+	public ProductEntity findById(@Param("id") int id);
+	
+//	@Query(value = "INSERT INTO products (name, price, sale_price, description, author, category_id) VALUES (:name, :price, :sale_price, :description, :author, :category_id)", nativeQuery = true)
+//	@Modifying
+//	@Transactional
+//	public boolean insertProduct(@Param("name") String name, @Param("price") float price, @Param("sale_price") float salePrice, @Param("description") String description, @Param("author") String author, @Param("category_id") Long categoryEntity);
+//	
+//	@Modifying
+//	@Transactional
+//	@Query(value = "UPDATE products SET name = :name, price = :price, sale_price = :sale_price, description = :description, author = :author, category_id = :category_id WHERE id = :id", nativeQuery = true)
+//	public void updateProduct(@Param("id") Long id, @Param("name") String name, @Param("price") float price, @Param("sale_price") float salePrice, @Param("description") String description, @Param("author") String author, @Param("category_id") Long categoryId);
+}

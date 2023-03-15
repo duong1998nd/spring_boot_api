@@ -1,0 +1,23 @@
+package com.locShop.model;
+
+import java.util.HashSet;
+import java.util.Set;
+
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "role")
+public class RoleEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<UserEntity> users = new HashSet<>();
+
+    // getters and setters
+}

@@ -1,0 +1,2 @@
+#config port
+server.port=8082

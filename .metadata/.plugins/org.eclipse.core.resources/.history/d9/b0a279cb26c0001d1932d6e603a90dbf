@@ -1,0 +1,5 @@
+package com.locShop.securityConfig;
+
+public class JwtAuthenticationEntryPoint {
+
+}

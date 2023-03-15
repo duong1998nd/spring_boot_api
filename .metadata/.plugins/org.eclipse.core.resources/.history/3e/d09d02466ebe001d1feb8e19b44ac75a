@@ -1,0 +1,28 @@
+package com.locShop.model;
+
+import java.util.HashSet;
+import java.util.Set;
+
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "user")
+public class UserEntity {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private String username;
+
+	private String password;
+	
+	@Column(columnDefinition = "varchar(10) default 'USER'")
+	private String role;
+
+	// getters and setters
+
+	
+	
+}

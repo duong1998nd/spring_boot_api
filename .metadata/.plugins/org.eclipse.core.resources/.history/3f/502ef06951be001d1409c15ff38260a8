@@ -1,0 +1,10 @@
+package com.locShop.repository;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import com.locShop.model.UserEntity;
+
+public interface AccountRepository extends CrudRepository<UserEntity, String>{
+	
+}

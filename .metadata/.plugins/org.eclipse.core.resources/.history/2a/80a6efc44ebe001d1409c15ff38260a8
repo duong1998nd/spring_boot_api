@@ -1,0 +1,27 @@
+package com.locShop.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.locShop.repository.AccountRepository;
+
+import com.locShop.model.AccountEntity;
+
+@Service
+public class AccountService {
+
+	@Autowired
+	private AccountRepository AccountRepository;
+	
+	public List<AccountEntity> getAllUsers(){
+	    List<AccountEntity>userRecords = new ArrayList<>();
+	    AccountRepository.findAll().forEach(userRecords::add);
+	    return userRecords;
+	  }
+
+	  public void addUser(AccountEntity Account) {
+		  AccountRepository.save(Account);
+	  }
+}

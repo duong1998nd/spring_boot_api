@@ -1,0 +1,14 @@
+package com.locShop.repository;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+import com.locShop.model.UserEntity;
+
+public interface AccountRepository extends CrudRepository<UserEntity, Long>{
+	
+//	@Query("SELECT u FROM UserEntity u WHERE u.username = :username")
+	@Query("select user.username, role.name from UserEntity, RoleEntity, user_role where username =? and user.id = user_role.user_id and user_role.role_id = role.id")
+	public UserEntity getUserByUsername(@Param("username") String username);
+}

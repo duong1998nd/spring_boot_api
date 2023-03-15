@@ -1,0 +1,32 @@
+package com.locShop.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.locShop.model.CartEntity;
+
+@RestController
+@RequestMapping("api/cart")
+public class Cart {
+	
+	@GetMapping("/cart")
+	public List<CartEntity> findAll(){
+		return null;
+	}
+	
+	@PostMapping("/items")
+	public String addItem() {
+		return null;
+	}
+	
+	@PostMapping("/add")
+	public String addCart() {
+		return null;
+	}
+	
+	
+}

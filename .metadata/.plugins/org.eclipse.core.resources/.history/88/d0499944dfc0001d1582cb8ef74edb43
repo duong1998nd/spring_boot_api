@@ -1,0 +1,24 @@
+package com.locShop.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Service;
+
+import com.locShop.model.CategoryEntity;
+import com.locShop.repository.CategoryRepository;
+
+@Service
+public class CategoryService{
+
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
+
+	public CategoryEntity findById(Long id) {
+		return categoryRepository.findById(id);
+	}
+
+
+}

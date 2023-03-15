@@ -1,0 +1,9 @@
+package com.locShop.repository;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.locShop.model.AccountEntity;
+
+public interface AccountRepository extends CrudRepository<AccountEntity, String>{
+	
+}

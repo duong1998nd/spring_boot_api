@@ -1,0 +1,5 @@
+package com.locShop.repository;
+
+public interface CategoryRepository {
+
+}
