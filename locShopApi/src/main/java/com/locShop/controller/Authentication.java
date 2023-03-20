@@ -1,9 +1,11 @@
 package com.locShop.controller;
 
+import com.locShop.MyUserDetail.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,17 +22,17 @@ import com.locShop.service.UserDetailsServiceImpl;
 @CrossOrigin
 @RequestMapping("/api/auth")
 public class Authentication {
-	
+
 	@Autowired
 	UserDetailsServiceImpl detailsService;
-	
+
 	@Autowired
 	private JwtUtils jwtUtils;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	
+
 	@PostMapping("/authenticate")
 	public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest req)
 	{
@@ -41,5 +43,5 @@ public class Authentication {
 		}
 		return ResponseEntity.status(400).body("some error has occurred");
 	}
-	
+
 }

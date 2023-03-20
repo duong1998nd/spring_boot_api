@@ -5,9 +5,14 @@ import java.util.Set;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user",uniqueConstraints = {
+		@UniqueConstraint(columnNames = "username"),
+		@UniqueConstraint(columnNames = "email"),
+		@UniqueConstraint(columnNames = "phone")
+})
 public class UserEntity {
 
 	@Id
@@ -24,8 +29,12 @@ public class UserEntity {
 	
 	private String phone;
 	
-	@Column(columnDefinition = "varchar(10) default 'USER'")
+	@Column(columnDefinition = "varchar(10)")
 	private String role;
+
+	public UserEntity() {
+		this.role = "USER";
+	}
 
 	public Long getId() {
 		return id;

@@ -2,8 +2,10 @@ package com.locShop.service;
 
 import java.util.Optional;
 
+import com.locShop.MyUserDetail.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.locShop.model.CartItemEntity;
@@ -17,7 +19,24 @@ public class CartItemService implements CrudRepository<CartItemEntity, Long>{
 
 	@Override
 	public <S extends CartItemEntity> S save(S entity) {
-		// TODO Auto-generated method stub
+		try {
+			CartItemEntity findByCartIdAndProductId = findByCartIdAndProductId(entity.getCart(),entity.getProduct());
+			if(findByCartIdAndProductId!=null){
+				findByCartIdAndProductId.setQuantity(findByCartIdAndProductId.getQuantity()+entity.getQuantity());
+				return (S) cartItemRepository.save(findByCartIdAndProductId);
+			}else{
+				return cartItemRepository.save(entity);
+			}
+		}catch (Exception e){
+			return null;
+		}
+	}
+
+	public CartItemEntity findByCartIdAndProductId(Long cartId, Long proId){
+		CartItemEntity cartItem = cartItemRepository.findByCartIdAndProductId(cartId,proId);
+		if(cartItem!=null){
+			return cartItem;
+		}
 		return null;
 	}
 
@@ -29,8 +48,7 @@ public class CartItemService implements CrudRepository<CartItemEntity, Long>{
 
 	@Override
 	public Optional<CartItemEntity> findById(Long id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return cartItemRepository.findById(id);
 	}
 
 	@Override

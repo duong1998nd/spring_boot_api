@@ -1,4 +1,4 @@
-package com.locShop.controller;
+package com.locShop.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,12 +12,12 @@ import com.locShop.service.CategoryService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/category")
-public class Category {
-	
+@RequestMapping("/api/admin/category")
+public class adminCategory {
+
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@PostMapping("/add")
 	public String insertCategory(@Valid @RequestBody CategoryEntity cat) {
 		if(categoryService.save(cat) == null) {

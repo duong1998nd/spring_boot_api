@@ -1,4 +1,4 @@
-package com.locShop.controller;
+package com.locShop.controller.admin;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,37 +26,53 @@ import java.util.stream.Collectors;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/product")
-public class Product {
-	
+@RequestMapping("api/admin/product")
+public class adminProduct {
+
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@PostMapping(value = "/add")
 	public String insertProduct(@Valid @RequestBody ProductEntity pro) {
 		if(productService.save(pro)!=null) {
 			return "thêm mới thành công";
-			
+
 		}else {
 			return "thêm mới thất bại";
 		}
 	}
-	
+
 	@GetMapping(value = "/details")
 	public Optional<ProductEntity> findById(@RequestParam("id") Long id) {
 		return productService.findById(id);
 	}
-	
-	 @ExceptionHandler(MethodArgumentNotValidException.class)
-	    @ResponseStatus(HttpStatus.BAD_REQUEST)
-	    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-	        BindingResult bindingResult = ex.getBindingResult();
-	        List<String> errors = bindingResult.getAllErrors().stream()
-	                .map(ObjectError::getDefaultMessage)
-	                .collect(Collectors.toList());
-	        return ResponseEntity.badRequest().body(String.join(", ", errors));
-	    }
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+		BindingResult bindingResult = ex.getBindingResult();
+		List<String> errors = bindingResult.getAllErrors().stream()
+				.map(ObjectError::getDefaultMessage)
+				.collect(Collectors.toList());
+		return ResponseEntity.badRequest().body(String.join(", ", errors));
+	}
+
+	@RequestMapping("/show")
+	public List<ProductEntity> findAll() {
+		List<ProductEntity> products;
+		try {
+			products = productService.findAll();
+		} catch (Exception e) {
+			throw new RuntimeException("Error retrieving products", e);
+		}
+		return products;
+	}
+
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+	}
 }

@@ -73,7 +73,9 @@ public class WebSecurityConfig {
 			http.csrf().disable()
 			.authorizeHttpRequests()
 			.requestMatchers("/api/auth/authenticate").permitAll()
-			.anyRequest().authenticated()
+			.requestMatchers("/api/web/**").hasAnyAuthority("ADMIN","USER")
+			.requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+			.anyRequest().permitAll()
 			.and()
 			.authenticationProvider(authenticationProvider())
 			.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
@@ -89,7 +91,7 @@ public class WebSecurityConfig {
 		public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 			return config.getAuthenticationManager();
 		}
-    
+
 //    private CorsConfigurationSource crosConfigurationSource() {
 //    	  CorsConfiguration configuration = new CorsConfiguration();
 //    	  configuration.setAllowedOrigins(Arrays.asList("*"));

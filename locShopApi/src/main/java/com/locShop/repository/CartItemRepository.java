@@ -7,5 +7,10 @@ import com.locShop.model.CartItemEntity;
 
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItemEntity, Long>{
-	
+
+    CartItemEntity findByProductId(Long proId);
+
+    CartItemEntity findByCartId(Long cartId);
+
+    CartItemEntity findByCartIdAndProductId(Long cartId, Long proId);
 }

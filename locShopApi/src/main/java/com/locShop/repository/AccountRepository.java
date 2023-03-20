@@ -8,6 +8,9 @@ import com.locShop.model.UserEntity;
 
 public interface AccountRepository extends CrudRepository<UserEntity, Long>{
 	
-	@Query("SELECT u FROM UserEntity u WHERE u.username = :username AND role='ADMIN'")
+	@Query("SELECT u FROM UserEntity u WHERE u.username = :username")
 	public UserEntity getUserByUsername(@Param("username") String username);
+
+
+	UserEntity findByUsername(String username);
 }

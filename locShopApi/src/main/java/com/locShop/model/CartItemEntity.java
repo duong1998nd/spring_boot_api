@@ -27,6 +27,19 @@ public class CartItemEntity {
 
 	private int quantity;
 
+	public CartItemEntity(CartEntity cart, ProductEntity product, int quantity) {
+		this.cart = cart;
+		this.product = product;
+		this.quantity = quantity;
+	}
+
+	public CartItemEntity(Long id, ProductEntity pro, int quantity) {
+	}
+
+	public CartItemEntity() {
+
+	}
+
 	public Long getId() {
 		return id;
 	}

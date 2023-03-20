@@ -28,4 +28,9 @@ public class AccountService {
 			 return false;
 		 }
 	  }
+
+	  public UserEntity findByUsername(String username){
+		UserEntity user = AccountRepository.findByUsername(username);
+		return user;
+	  }
 }
