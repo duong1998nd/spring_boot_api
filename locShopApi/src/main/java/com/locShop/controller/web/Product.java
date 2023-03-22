@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/web/product")
+@RequestMapping("api")
 public class Product {
 
 	@Autowired
@@ -26,7 +26,7 @@ public class Product {
 	@Autowired
 	private CategoryService categoryService;
 
-	@GetMapping(value = "/details")
+	@GetMapping(value = "/product/details")
 	public Optional<ProductEntity> findById(@RequestParam("id") Long id) {
 		return productService.findById(id);
 	}
@@ -41,7 +41,7 @@ public class Product {
 		return ResponseEntity.badRequest().body(String.join(", ", errors));
 	}
 
-	@RequestMapping("/")
+	@RequestMapping("/product")
 	public List<ProductEntity> findAll() {
 		List<ProductEntity> products;
 		try {
@@ -50,6 +50,12 @@ public class Product {
 			throw new RuntimeException("Error retrieving products", e);
 		}
 		return products;
+	}
+
+	@RequestMapping("/product?categoryId=:id")
+	public List<ProductEntity> findByCat(@RequestParam("id") Long id){
+		System.out.println(id);
+		return null;
 	}
 
 	@ExceptionHandler(RuntimeException.class)

@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.locShop.model.ProductEntity;
@@ -23,16 +25,14 @@ public class ProductService{
 
 	public Optional<ProductEntity> findById(Long id) {
 		Optional<ProductEntity> product = productRepository.findById(id);
-        if(product.isPresent()) {
-            return product;
-        } else {
+        if(!product.isPresent()) {
             return null;
         }
+		return product;
 	}
 
 	public List<ProductEntity> findAll() {
 		return productRepository.findAll();
 	}
-	
 	
 }

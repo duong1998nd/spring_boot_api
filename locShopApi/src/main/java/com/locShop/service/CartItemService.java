@@ -3,6 +3,8 @@ package com.locShop.service;
 import java.util.Optional;
 
 import com.locShop.MyUserDetail.MyUserDetails;
+import com.locShop.model.CartEntity;
+import com.locShop.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,9 @@ public class CartItemService implements CrudRepository<CartItemEntity, Long>{
 	
 	@Autowired
 	private CartItemRepository cartItemRepository;
+
+	@Autowired
+	private  CartService cartService;
 
 	@Override
 	public <S extends CartItemEntity> S save(S entity) {
@@ -60,6 +65,11 @@ public class CartItemService implements CrudRepository<CartItemEntity, Long>{
 	@Override
 	public Iterable<CartItemEntity> findAll() {
 		return cartItemRepository.findAll();
+	}
+
+	public Iterable<CartItemEntity> findAllByCartId(MyUserDetails myUser) {
+		 CartEntity cart = cartService.findByUserId(myUser.getId());
+		return cartItemRepository.findAllByCartId(cart.getId());
 	}
 
 	@Override

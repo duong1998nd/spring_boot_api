@@ -22,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("api/web/cart")
 public class Cart {
 
+
 	@Autowired
 	private CartItemService cartItemService;
 
@@ -36,7 +37,8 @@ public class Cart {
 
 	@GetMapping("/list")
 	public Iterable<CartItemEntity> findAll(){
-		return cartItemService.findAll();
+		MyUserDetails myUser = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return cartItemService.findAllByCartId(myUser);
 	}
 
 	@PostMapping("/items")
