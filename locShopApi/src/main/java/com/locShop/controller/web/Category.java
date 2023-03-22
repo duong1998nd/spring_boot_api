@@ -20,9 +20,4 @@ public class Category {
 		return categoryService.findAll();
 	}
 
-	@GetMapping("/category?productId={id}")
-	public List<ProductEntity> listProductOrCategory(@PathVariable int id){
-
-		return null;
-	}
 }

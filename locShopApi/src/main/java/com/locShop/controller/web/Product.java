@@ -4,6 +4,7 @@ package com.locShop.controller.web;
 import com.locShop.model.ProductEntity;
 import com.locShop.service.CategoryService;
 import com.locShop.service.ProductService;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,9 +53,8 @@ public class Product {
 		return products;
 	}
 
-	@RequestMapping("/product?categoryId=:id")
-	public List<ProductEntity> findByCat(@RequestParam("id") Long id){
-		System.out.println(id);
+	@RequestMapping("/product/categoryId={id}")
+	public List<ProductEntity> findByCat(@PathVariable("id") Long id){
 		return null;
 	}
 

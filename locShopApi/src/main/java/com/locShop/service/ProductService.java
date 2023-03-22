@@ -3,6 +3,7 @@ package com.locShop.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.locShop.model.CartItemEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
@@ -34,5 +35,7 @@ public class ProductService{
 	public List<ProductEntity> findAll() {
 		return productRepository.findAll();
 	}
+
+
 	
 }
