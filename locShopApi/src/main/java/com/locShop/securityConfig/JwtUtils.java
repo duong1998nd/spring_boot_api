@@ -3,6 +3,8 @@ package com.locShop.securityConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,8 @@ import java.util.function.Function;
 public class JwtUtils {
     private String SECRET_KEY = "secret";
 
- // lấy tên người dùng từ mã thông báo jwt
+
+    // lấy tên người dùng từ mã thông báo jwt
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -63,4 +66,6 @@ public class JwtUtils {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
+
 }

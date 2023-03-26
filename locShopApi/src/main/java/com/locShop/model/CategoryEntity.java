@@ -24,13 +24,13 @@ public class CategoryEntity {
 	private Long id;
 
 	@NotBlank(message = "Danh mục không được để trống")
-	@Column(nullable = false, unique = true)
+	@Column(nullable = true, unique = true)
 	private String name;
 	
 	@ColumnDefault("1")
 	private byte status;
 
-	@OneToMany(mappedBy = "category_id",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "category",fetch = FetchType.EAGER)
 	private List<ProductEntity> products;
 	
 	public Long getId() {

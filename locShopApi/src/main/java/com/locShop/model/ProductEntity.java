@@ -46,25 +46,24 @@ public class ProductEntity {
 	
 	@ManyToOne()
 	@JoinColumn(name = "category_id")
-	private CategoryEntity category_id;
+	private CategoryEntity category;
 	
 	public ProductEntity() {
 	}
 	
 	
-	public ProductEntity(Long id,
+	public ProductEntity(
 			@NotBlank(message = "Tên sách không được để trống") @Size(min = 5, max = 250, message = "Tên phải ít nhất 5 ký tự max 250 ký tự") String name,
 			@NotBlank(message = "Ảnh của sách không được để trống") String image, float price, float sale_price,
 			@NotBlank(message = "Tác giả không được để trống") String author, String desciption,
 			CategoryEntity category_id) {
-		this.id = id;
 		this.name = name;
 		this.image = image;
 		this.price = price;
 		this.sale_price = sale_price;
 		this.author = author;
 		this.desciption = desciption;
-		this.category_id = category_id;
+		this.category = category_id;
 	}
 
 	public Long getId() {
@@ -124,11 +123,11 @@ public class ProductEntity {
 	}
 
 	public Long getCategory_id() {
-		return category_id.getId();
+		return category.getId();
 	}
 
 	public void setCategory_id(CategoryEntity category_id) {
-		this.category_id = category_id;
+		this.category = category_id;
 	}
 
 	

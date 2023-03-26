@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/product")
 public class Product {
 
 	@Autowired
@@ -27,10 +27,24 @@ public class Product {
 	@Autowired
 	private CategoryService categoryService;
 
-	@GetMapping(value = "/product/details")
-	public Optional<ProductEntity> findById(@RequestParam("id") Long id) {
+	@GetMapping("")
+	public List<ProductEntity> findAll() {
+		List<ProductEntity> products = productService.findAll();
+		return products;
+	}
+
+	@GetMapping(value = "/{id}")
+	public Optional<ProductEntity> findById( @PathVariable Long id) {
 		return productService.findById(id);
 	}
+
+	@RequestMapping("/categoryId={id}")
+	public List<ProductEntity> findByCat(@PathVariable("id") Long id){
+		List<ProductEntity> pros = productService.findAllByCategoryId(id);
+		return pros;
+	}
+
+
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -40,22 +54,6 @@ public class Product {
 				.map(ObjectError::getDefaultMessage)
 				.collect(Collectors.toList());
 		return ResponseEntity.badRequest().body(String.join(", ", errors));
-	}
-
-	@RequestMapping("/product")
-	public List<ProductEntity> findAll() {
-		List<ProductEntity> products;
-		try {
-			products = productService.findAll();
-		} catch (Exception e) {
-			throw new RuntimeException("Error retrieving products", e);
-		}
-		return products;
-	}
-
-	@RequestMapping("/product/categoryId={id}")
-	public List<ProductEntity> findByCat(@PathVariable("id") Long id){
-		return null;
 	}
 
 	@ExceptionHandler(RuntimeException.class)

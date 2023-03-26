@@ -1,5 +1,6 @@
 package com.locShop.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +11,22 @@ import com.locShop.model.CategoryEntity;
 import com.locShop.repository.CategoryRepository;
 
 @Service
-public class CategoryService implements CrudRepository<CategoryEntity, Long>{
+public class CategoryService implements CrudRepository<CategoryEntity, Long> {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
 	@Override
 	public <S extends CategoryEntity> S save(S entity) {
-		if(categoryRepository.save(entity)!=null) {
-			return entity;
+		if(entity.getId()!=null){
+			CategoryEntity cat = categoryRepository.findById(entity.getId()).orElse(null);
+			if(cat!=null){
+				cat.setName(entity.getName());
+				cat.setStatus(entity.getStatus());
+				return (S) categoryRepository.save(cat);
+			}
 		}
-		return null;
+		return categoryRepository.save(entity);
 	}
 
 	@Override
@@ -29,9 +35,6 @@ public class CategoryService implements CrudRepository<CategoryEntity, Long>{
 		return null;
 	}
 
-	public CategoryEntity findById(int id) {
-		return categoryRepository.findById(id);
-	}
 
 	@Override
 	public boolean existsById(Long id) {
@@ -41,8 +44,8 @@ public class CategoryService implements CrudRepository<CategoryEntity, Long>{
 
 	@Override
 	public Iterable<CategoryEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<CategoryEntity> cats = categoryRepository.findAll();
+		return cats;
 	}
 
 	@Override
@@ -59,8 +62,7 @@ public class CategoryService implements CrudRepository<CategoryEntity, Long>{
 
 	@Override
 	public void deleteById(Long id) {
-		// TODO Auto-generated method stub
-		
+		categoryRepository.deleteById(id);
 	}
 
 	@Override
@@ -89,8 +91,7 @@ public class CategoryService implements CrudRepository<CategoryEntity, Long>{
 
 	@Override
 	public Optional<CategoryEntity> findById(Long id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return categoryRepository.findById(id);
 	}
 
 }

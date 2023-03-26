@@ -1,10 +1,9 @@
 package com.locShop.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import com.locShop.model.CategoryEntity;
 import com.locShop.service.CategoryService;
@@ -18,12 +17,36 @@ public class adminCategory {
 	@Autowired
 	private CategoryService categoryService;
 
-	@PostMapping("/add")
+	@GetMapping("")
+	public Iterable<CategoryEntity> listCategory(){
+		return categoryService.findAll();
+	}
+
+	@PostMapping("")
 	public String insertCategory(@Valid @RequestBody CategoryEntity cat) {
-		if(categoryService.save(cat) == null) {
-			return "thêm mới thất bại";
-		}else {
+		if(categoryService.save(cat) != null) {
 			return "thêm mới thành công";
 		}
+		return "thêm mới thất bại";
+	}
+
+	@PutMapping("")
+	public String updateCategory(@Valid @RequestBody CategoryEntity cat) {
+		if(categoryService.save(cat) != null) {
+			return "update thành công";
+		}
+		return "update thất bại";
+	}
+
+	@DeleteMapping("/{id}")
+	public String deleteCategory(@PathVariable Long id){
+
+		CategoryEntity catById = categoryService.findById(id).orElse(null);
+		System.out.println(catById.getId());
+		if(catById!=null){
+			categoryService.deleteById(id);
+			return "đã xóa danh mục có id="+id;
+		}
+		return "Không tìm thấy danh mục có id="+id;
 	}
 }

@@ -72,7 +72,7 @@ public class WebSecurityConfig {
 		SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
 			http.csrf().disable()
 			.authorizeHttpRequests()
-			.requestMatchers("/api/auth/authenticate").permitAll()
+			.requestMatchers("/api/auth/authenticate","/swagger-ui/**").permitAll()
 			.requestMatchers("/api/web/**").hasAnyAuthority("ADMIN","USER")
 			.requestMatchers("/api/admin/**").hasAuthority("ADMIN")
 			.anyRequest().permitAll()
