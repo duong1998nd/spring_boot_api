@@ -9,6 +9,8 @@ import com.locShop.model.ProductEntity;
 import com.locShop.securityConfig.JwtUtils;
 import com.locShop.service.CartService;
 import com.locShop.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,12 +37,14 @@ public class Cart {
 	@Autowired
 	JwtUtils userJwt;
 
+	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
 	@GetMapping("/list")
 	public Iterable<CartItemEntity> findAll(){
 		MyUserDetails myUser = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return cartItemService.findAllByCartId(myUser);
 	}
 
+	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
 	@PostMapping("/items")
 	public CartItemEntity addItem(@RequestBody CartDto req) {
 			MyUserDetails user = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -52,11 +56,13 @@ public class Cart {
 			return cartItemService.save(cartItem);
 	}
 
+	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
 	@PutMapping("/items/:id")
 	public String addCart() {
 		return null;
 	}
 
+	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
 	@DeleteMapping("/items/:id")
 	public String deleteItem() {
 		return null;
