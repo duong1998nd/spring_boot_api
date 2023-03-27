@@ -45,7 +45,6 @@ public class Product {
 	}
 
 
-
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {

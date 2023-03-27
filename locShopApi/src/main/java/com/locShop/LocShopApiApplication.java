@@ -20,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		tags = {@Tag(name = "Book Store" , description = "Đây là Api của web bán sách.")}
 )
 
-@SecurityScheme(name = "BearerJWT", type = SecuritySchemeType.HTTP,scheme = "Bearer", bearerFormat = "JWT",
+@SecurityScheme(name = "BearerJWT", type = SecuritySchemeType.HTTP,scheme = "bearer", bearerFormat = "JWT",
 description = "Brearer token for project books store")
 public class LocShopApiApplication implements WebMvcConfigurer{
 

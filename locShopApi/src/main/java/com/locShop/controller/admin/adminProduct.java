@@ -4,6 +4,11 @@ package com.locShop.controller.admin;
 import com.locShop.model.CategoryEntity;
 import com.locShop.service.StorageService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -50,8 +55,17 @@ public class adminProduct {
 		return productService.findById(id);
 	}
 
-	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
-	@PostMapping(value = "")
+	@Operation(
+			security = {@SecurityRequirement(name = "BearerJWT")},
+			parameters = {@Parameter(name = "category_id",
+			schema = @Schema(type = "string",
+			allowableValues = {"1"},
+			defaultValue = "1")
+			)}
+	)
+	@PostMapping(value = "",consumes = {
+			"multipart/form-data"
+	})
 	public String insertProduct(@RequestParam("image") MultipartFile file,
 								@RequestParam("name") String name,
 								@RequestParam("price") Float price,
@@ -72,18 +86,31 @@ public class adminProduct {
 	}
 
 	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
-	@PutMapping("")
-	public String updateProduct(@Valid @RequestBody ProductEntity pro){
-		if(productService.save(pro) != null) {
-			return "update thành công";
+	@PutMapping(value = "",consumes = {
+			"multipart/form-data"
+	})
+	public String updateProduct(@RequestParam("image") MultipartFile file,
+								@RequestParam("id") Long id,
+								@RequestParam("name") String name,
+								@RequestParam("price") Float price,
+								@RequestParam("sale_price") Float sale_price,
+								@RequestParam("desciption") String desc,
+								@RequestParam("author") String author,
+								@RequestParam("category_id") Long category_id) throws IOException {
+		ProductEntity pro = new ProductEntity(id,name,file.getOriginalFilename(),price,sale_price,author,desc,categoryService.findById(category_id).orElse(null));
+		String uploadImage = service.uploadImage(file);
+		if(uploadImage != null) {
+			if(productService.save(pro)!=null){
+				return "update thành công";
+			}
+			return "update thất bại";
 		}
 		return "update thất bại";
 	}
 
 	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
-	@DeleteMapping("/{id}")
-	public String deleteProduct(@PathVariable Long id){
-
+	@DeleteMapping("")
+	public String deleteProduct(@RequestParam("id") Long id){
 		ProductEntity proById = productService.findById(id).orElse(null);
 		System.out.println(proById.getId());
 		if(proById!=null){

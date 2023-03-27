@@ -50,7 +50,22 @@ public class ProductEntity {
 	
 	public ProductEntity() {
 	}
-	
+
+	public ProductEntity(
+			@NotBlank(message = "id sách không được để trống") Long id,
+			@NotBlank(message = "Tên sách không được để trống") @Size(min = 5, max = 250, message = "Tên phải ít nhất 5 ký tự max 250 ký tự") String name,
+			@NotBlank(message = "Ảnh của sách không được để trống") String image, float price, float sale_price,
+			@NotBlank(message = "Tác giả không được để trống") String author, String desciption,
+			CategoryEntity category_id) {
+		this.id = id;
+		this.name = name;
+		this.image = image;
+		this.price = price;
+		this.sale_price = sale_price;
+		this.author = author;
+		this.desciption = desciption;
+		this.category = category_id;
+	}
 	
 	public ProductEntity(
 			@NotBlank(message = "Tên sách không được để trống") @Size(min = 5, max = 250, message = "Tên phải ít nhất 5 ký tự max 250 ký tự") String name,

@@ -32,6 +32,15 @@ public class UserEntity {
 	@Column(columnDefinition = "varchar(10)")
 	private String role;
 
+	public UserEntity(String fullname, String email, String username, String password, String phone) {
+		this.fullname = fullname;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.phone = phone;
+		this.role = "USER";
+	}
+
 	public UserEntity() {
 		this.role = "USER";
 	}

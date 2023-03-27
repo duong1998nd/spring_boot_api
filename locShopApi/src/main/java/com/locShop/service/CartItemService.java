@@ -45,6 +45,15 @@ public class CartItemService implements CrudRepository<CartItemEntity, Long>{
 		return null;
 	}
 
+	public boolean updateQuantityProductInCart(Long id,int quantity){
+		CartItemEntity cartItem = cartItemRepository.findById(id).orElse(null);
+		if(cartItem!=null){
+			cartItem.setQuantity(quantity);
+			return cartItemRepository.save(cartItem)!=null?true:false;
+		}
+		return false;
+	}
+
 	@Override
 	public <S extends CartItemEntity> Iterable<S> saveAll(Iterable<S> entities) {
 		// TODO Auto-generated method stub
@@ -58,7 +67,12 @@ public class CartItemService implements CrudRepository<CartItemEntity, Long>{
 
 	@Override
 	public boolean existsById(Long id) {
-		// TODO Auto-generated method stub
+//		if(findById(id)!=null){
+//			CartItemEntity cartItem = findById(id).orElse(null);
+//			int update_quantity = cartItem.getQuantity()-1;
+//			cartItem.setQuantity(update_quantity);
+//			return cartItemRepository.save(cartItem)!=null?true:false;
+//		}
 		return false;
 	}
 
@@ -86,14 +100,13 @@ public class CartItemService implements CrudRepository<CartItemEntity, Long>{
 
 	@Override
 	public void deleteById(Long id) {
-		// TODO Auto-generated method stub
-		
+		cartItemRepository.deleteById(id);
 	}
 
 	@Override
 	public void delete(CartItemEntity entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

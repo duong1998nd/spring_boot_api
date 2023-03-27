@@ -1,10 +1,6 @@
 package com.locShop.controller.web;
 
-import java.util.Optional;
-
 import com.locShop.MyUserDetail.MyUserDetails;
-import com.locShop.dto.CartDto;
-import com.locShop.model.CartEntity;
 import com.locShop.model.ProductEntity;
 import com.locShop.securityConfig.JwtUtils;
 import com.locShop.service.CartService;
@@ -12,13 +8,10 @@ import com.locShop.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import com.locShop.model.CartItemEntity;
 import com.locShop.service.CartItemService;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("api/web/cart")
@@ -46,26 +39,36 @@ public class Cart {
 
 	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
 	@PostMapping("/items")
-	public CartItemEntity addItem(@RequestBody CartDto req) {
+	public CartItemEntity addItem(
+			@RequestParam("productId") Long proId,
+			@RequestParam("quantity") int quantity
+			) {
 			MyUserDetails user = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			ProductEntity pro = productService.findById(req.getProductId()).orElse(null);
-			CartItemEntity cartItem = new CartItemEntity(cartService.findByUserId(user.getId()), pro, req.getQuantity());
-			System.out.println(cartItem.getCart());
-			System.out.println(cartItem.getProduct());
-			System.out.println(cartItem.getQuantity());
+			ProductEntity pro = productService.findById(proId).orElse(null);
+			CartItemEntity cartItem = new CartItemEntity(cartService.findByUserId(user.getId()), pro, quantity);
 			return cartItemService.save(cartItem);
 	}
 
 	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
-	@PutMapping("/items/:id")
-	public String addCart() {
-		return null;
+	@PutMapping("/items/{id}")
+	public String updateCart(@PathVariable Long id,@RequestParam("quantity") int quantity) {
+		boolean bl = cartItemService.updateQuantityProductInCart(id,quantity);
+		if(bl){
+			return "số lượng sản phẩm đã được cập nhật";
+		}
+		return "đã có lỗi xảy ra không thể cập nhật số lượng";
 	}
 
 	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
-	@DeleteMapping("/items/:id")
-	public String deleteItem() {
-		return null;
+	@DeleteMapping("/items/{id}")
+	public String deleteItem(@PathVariable("id") Long id) {
+		try {
+			cartItemService.deleteById(id);
+			return "success";
+		}catch (Exception e){
+			e.printStackTrace();
+			return "error";
+		}
 	}
 
 }

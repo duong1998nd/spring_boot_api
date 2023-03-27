@@ -25,11 +25,23 @@ public class Account {
 	private CartService cartService;
 
 	@PostMapping("/account/register")
-	public String addAccount(@RequestBody UserEntity acc) {
-		acc.setPassword(new PasswordGenerator().bcryptPassword(acc.getPassword()));
+	public String addAccount(
+			@RequestParam("fullname") String fullname,
+			@RequestParam("email") String email,
+			@RequestParam("username") String username,
+			@RequestParam("password") String password,
+			@RequestParam("phone") String phone
+	) {
+		System.out.println(fullname);
+		System.out.println(email);
+		System.out.println(username);
+		System.out.println(password);
+		System.out.println(phone);
+		UserEntity acc = new UserEntity(fullname,email,username,password,phone);
+		acc.setPassword(new PasswordGenerator().bcryptPassword(password));
 		try {
 			accountService.addUser(acc);
-			UserEntity user = accountService.findByUsername(acc.getUsername());
+			UserEntity user = accountService.findByUsername(username);
 			CartEntity cart = new CartEntity();
 			cart.setUser(user);
 			cartService.save(cart);
