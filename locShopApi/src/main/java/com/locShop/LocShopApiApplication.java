@@ -1,27 +1,29 @@
 package com.locShop;
 
-import com.locShop.Handler.JwtInterceptor;
-import com.locShop.service.StorageService;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.servers.Server;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.io.IOException;
 
 @SpringBootApplication
 @ComponentScan("com.locShop")
+@OpenAPIDefinition(
+		info = @Info(title = "books API",version = "2.0.4"),
+		servers = {@Server(url = "http://localhost:8088"),@Server(url = "http://oneone.com")},
+		tags = {@Tag(name = "Book Store" , description = "Đây là Api của web bán sách.")}
+)
+
+@SecurityScheme(name = "BearerJWT", type = SecuritySchemeType.HTTP,scheme = "Bearer", bearerFormat = "JWT",
+description = "Brearer token for project books store")
 public class LocShopApiApplication implements WebMvcConfigurer{
+
 
 //	private JwtInterceptor tokenInterceptor;
 //

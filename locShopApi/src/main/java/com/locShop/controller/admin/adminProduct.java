@@ -3,6 +3,8 @@ package com.locShop.controller.admin;
 
 import com.locShop.model.CategoryEntity;
 import com.locShop.service.StorageService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -35,18 +37,20 @@ public class adminProduct {
 
 	@Autowired
 	private StorageService service;
-
+	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
 	@RequestMapping("")
 	public List<ProductEntity> findAll() {
 		List<ProductEntity> products = productService.findAll();
 		return products;
 	}
 
+	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
 	@GetMapping(value = "/details")
 	public Optional<ProductEntity> findById(@RequestParam("id") Long id) {
 		return productService.findById(id);
 	}
 
+	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
 	@PostMapping(value = "")
 	public String insertProduct(@RequestParam("image") MultipartFile file,
 								@RequestParam("name") String name,
@@ -67,6 +71,7 @@ public class adminProduct {
 		return "thêm mới thất bại";
 	}
 
+	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
 	@PutMapping("")
 	public String updateProduct(@Valid @RequestBody ProductEntity pro){
 		if(productService.save(pro) != null) {
@@ -75,6 +80,7 @@ public class adminProduct {
 		return "update thất bại";
 	}
 
+	@Operation(security = {@SecurityRequirement(name = "BearerJWT")})
 	@DeleteMapping("/{id}")
 	public String deleteProduct(@PathVariable Long id){
 
