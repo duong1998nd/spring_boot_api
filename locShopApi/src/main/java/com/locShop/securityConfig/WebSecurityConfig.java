@@ -49,25 +49,6 @@ public class WebSecurityConfig {
         auth.authenticationProvider(authenticationProvider());
     }
 	
-//    @Bean
-//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//		http
-//			.csrf().disable()
-//			.authorizeHttpRequests()
-//					.requestMatchers("/*").permitAll()
-////					.requestMatchers("/api/**").authenticated()
-//					.and()
-//				.formLogin().loginProcessingUrl("/login")
-//				 	.defaultSuccessUrl("/api/show-acc")
-//				 	.failureUrl("/login?error")
-//				 	.and()
-//				 .logout()
-//				 	.logoutUrl("/logout")
-//				 	.logoutSuccessUrl("/login")
-//				 	.deleteCookies("JSESSIONID");	
-//		return http.build();
-//	}
-    
 		@Bean
 		SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
 			http.csrf().disable()
@@ -91,15 +72,5 @@ public class WebSecurityConfig {
 		public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 			return config.getAuthenticationManager();
 		}
-
-//    private CorsConfigurationSource crosConfigurationSource() {
-//    	  CorsConfiguration configuration = new CorsConfiguration();
-//    	  configuration.setAllowedOrigins(Arrays.asList("*"));
-//    	  configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
-//    	  configuration.setAllowedHeaders(Arrays.asList("*"));
-//    	  UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//    	  source.registerCorsConfiguration("/**", configuration);
-//    	  return source;
-//    }
 
 }
