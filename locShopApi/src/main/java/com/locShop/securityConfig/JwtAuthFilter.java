@@ -53,7 +53,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 			logger.warn("Mã thông báo JWT không bắt đầu bằng Bearer String");
 		}
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			// client truy cập link bằng jwt token nếu đúng sẽ tiếp tục			
 			UserDetails userDetails = this.detailsService.loadUserByUsername(username);
 			if (jwtUtils.validateToken(jwtToken, userDetails)) {
 
