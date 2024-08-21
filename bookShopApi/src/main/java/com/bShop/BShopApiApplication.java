@@ -20,8 +20,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 				@Server(url = "http://192.168.1.3:8098", description = "Nhà5"),
 				@Server(url = "http://192.168.1.137:8098", description = "sapa"),
 				@Server(url = "http://192.168.102.210:8098", description = "thongtha"),
-				@Server(url = "http://172.16.0.202:8098", description = "trường"),
-				@Server(url = "http://192.168.1.62:8098", description = "Dongtay"),
+				@Server(url = "http://172.16.0.217:8098", description = "trường"),
+				@Server(url = "http://192.168.1.61:8098", description = "Dongtay"),
 				@Server(url = "http://192.168.1.83:8098", description = "tvDongtay")},
 		tags = {@Tag(name = "Book Store" , description = "Đây là Api của web bán sách.")}
 )
